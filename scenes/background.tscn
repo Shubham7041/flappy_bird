@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://w4qvwo5s4ert"]
+
+[ext_resource type="Texture2D" uid="uid://pfjja7t5wakx" path="res://assets/background.png" id="1_x57si"]
+[ext_resource type="Script" path="res://scripts/background.gd" id="2_0cm8g"]
+
+[node name="Background" type="Sprite2D"]
+position = Vector2(66, 66)
+texture = ExtResource("1_x57si")
+script = ExtResource("2_0cm8g")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(128, 0.0763726)
+scale = Vector2(1, 0.998807)
+texture = ExtResource("1_x57si")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(3.5, 4)
+scale = Vector2(6.75, 0.2)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

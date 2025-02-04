@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://dq7bj6jf4ycbi"]
+
+[ext_resource type="Texture2D" uid="uid://clkm1cutfnyc1" path="res://assets/pipe.png" id="1_6fje4"]
+[ext_resource type="Script" path="res://scripts/pipe.gd" id="1_qk26t"]
+[ext_resource type="Texture2D" uid="uid://dgdhbmpxcfgr6" path="res://assets/pipe_end.png" id="2_r73nt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmpnx"]
+size = Vector2(20, 216)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1xl62"]
+size = Vector2(20, 196)
+
+[node name="pipe" type="Area2D"]
+script = ExtResource("1_qk26t")
+
+[node name="upper_wall" type="CollisionShape2D" parent="."]
+position = Vector2(0, -144)
+shape = SubResource("RectangleShape2D_rmpnx")
+
+[node name="Pipe" type="Sprite2D" parent="upper_wall"]
+position = Vector2(0, -12)
+scale = Vector2(1, 5.59375)
+texture = ExtResource("1_6fje4")
+
+[node name="PipeEnd" type="Sprite2D" parent="upper_wall/Pipe"]
+position = Vector2(0, 18.5922)
+scale = Vector2(1, 0.178771)
+texture = ExtResource("2_r73nt")
+
+[node name="lower_wall" type="CollisionShape2D" parent="."]
+position = Vector2(0, 126)
+shape = SubResource("RectangleShape2D_1xl62")
+
+[node name="Pipe" type="Sprite2D" parent="lower_wall"]
+position = Vector2(-5.79176e-06, 15.25)
+rotation = -3.14159
+scale = Vector2(1, 5.14063)
+texture = ExtResource("1_6fje4")
+
+[node name="PipeEnd" type="Sprite2D" parent="lower_wall/Pipe"]
+position = Vector2(2.79753e-06, 19.1125)
+scale = Vector2(1, 0.194529)
+texture = ExtResource("2_r73nt")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

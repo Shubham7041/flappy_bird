@@ -1,0 +1,90 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8ec6yqki55rm"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_6cu8c"]
+[ext_resource type="PackedScene" uid="uid://dq7bj6jf4ycbi" path="res://scenes/pipe.tscn" id="1_bfdgw"]
+[ext_resource type="PackedScene" uid="uid://cxpildmhnxavw" path="res://scenes/player.tscn" id="2_ei740"]
+[ext_resource type="PackedScene" uid="uid://b34cngq51hlkg" path="res://scenes/killzone.tscn" id="3_7g6cc"]
+[ext_resource type="PackedScene" uid="uid://w4qvwo5s4ert" path="res://scenes/background.tscn" id="5_ll8sw"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_65uyd"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_6cu8c")
+
+[node name="Background" parent="." instance=ExtResource("5_ll8sw")]
+z_index = -1
+position = Vector2(17, 280)
+scale = Vector2(5.52344, 4.98633)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0.306923, 0.306923, 0.306923, 0.764706)
+z_index = 1
+offset_left = -334.0
+offset_top = -37.0
+offset_right = 507.0
+offset_bottom = 590.0
+color = Color(0.101961, 0.101961, 0.101961, 0.882353)
+
+[node name="CharacterBody2D" parent="." groups=["gameplay"] instance=ExtResource("2_ei740")]
+position = Vector2(88, 279)
+scale = Vector2(5, 5)
+
+[node name="killzone" parent="." instance=ExtResource("3_7g6cc")]
+position = Vector2(42, 681)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="killzone"]
+position = Vector2(1, 0)
+shape = SubResource("WorldBoundaryShape2D_65uyd")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(89, 279)
+scale = Vector2(5, 5)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="pipes" type="Node" parent="."]
+
+[node name="pipe2" parent="pipes" groups=["gameplay", "pipes"] instance=ExtResource("1_bfdgw")]
+position = Vector2(548, 235)
+scale = Vector2(2.856, 2.856)
+
+[node name="pipe3" parent="pipes" groups=["gameplay", "pipes"] instance=ExtResource("1_bfdgw")]
+position = Vector2(764, 450)
+scale = Vector2(2.856, 2.856)
+
+[node name="pipe4" parent="pipes" groups=["gameplay", "pipes"] instance=ExtResource("1_bfdgw")]
+position = Vector2(995, 268)
+scale = Vector2(2.856, 2.856)
+
+[node name="pipe" parent="pipes" groups=["gameplay", "pipes"] instance=ExtResource("1_bfdgw")]
+position = Vector2(321, 348)
+scale = Vector2(2.856, 2.856)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -4.0
+offset_top = -1.0
+offset_right = 832.0
+offset_bottom = 622.0
+color = Color(0.32, 0.32, 0.32, 0.65098)
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 313.0
+offset_top = 140.0
+offset_right = 551.0
+offset_bottom = 176.0
+theme_override_colors/font_color = Color(0.68, 0.0748, 0.0748, 1)
+theme_override_font_sizes/font_size = 20
+text = "Press Space Bar to Start"
+
+[connection signal="body_entered" from="killzone" to="CharacterBody2D" method="_on_killzone_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="pipes/pipe" method="_on_timer_timeout"]
